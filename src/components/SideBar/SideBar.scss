@@ -2,7 +2,8 @@
   display: flex;
   flex: 0.35;
   height: 100vh;
-  background-color: gray;
+  flex-grow: 0.1;
+  // background-color: gray;
 
   &__left {
     display: flex;
@@ -33,6 +34,7 @@
     background-color: #2b2d33;
     width: 300px;
     position: relative;
+    flex-grow: 1;
 
     &--top {
       color: white;

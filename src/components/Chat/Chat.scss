@@ -1,0 +1,50 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: antiquewhite;
+
+  &__message {
+    flex-grow: 1;
+  }
+
+  &__input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #474b53;
+    color: white;
+
+    &-form {
+      flex-grow: 1;
+    }
+
+    &-box {
+      padding: 15px;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      font-size: large;
+      width: 100%;
+    }
+
+    &--btn {
+      display: none;
+    }
+
+    &--icon {
+      color: #7b7c85;
+      cursor: pointer;
+    }
+
+    &-icon {
+      .MuiSvgIcon-root {
+        padding: 5px;
+      }
+    }
+  }
+}
