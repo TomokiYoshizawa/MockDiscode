@@ -85,6 +85,11 @@
 
     &-icon {
       width: 60px;
+      border-radius: 50%;
+    }
+
+    &-name--box {
+      margin-left: 5px;
     }
   }
 }
