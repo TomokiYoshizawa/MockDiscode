@@ -1,18 +1,37 @@
-import React from "react";
-
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import "./Message.scss";
+import { Timestamp } from "firebase/firestore";
 
-function Message() {
+type Props = {
+  timestamp: Timestamp;
+  message: string;
+  user: {
+    uid: string;
+    photo: string;
+    email: string;
+    displayName: string;
+  };
+};
+
+function Message(props: Props) {
+  const { message, timestamp, user } = props;
+
   return (
     <div className="message">
-      <AccountCircleIcon />
+      {user?.photo ? (
+        <img src={user.photo} alt="user" className="message__photo" />
+      ) : (
+        <AccountCircleIcon />
+      )}
       <div className="message__info">
         <h4>
-          tomoki <span className="message__timestamp">timestamp</span>
+          {user?.displayName}{" "}
+          <span className="message__timestamp">
+            {new Date(timestamp?.toDate()).toLocaleString()}
+          </span>
         </h4>
-        <p>message here</p>
+        <p>{message}</p>
       </div>
     </div>
   );

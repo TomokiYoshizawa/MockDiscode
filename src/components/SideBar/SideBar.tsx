@@ -1,8 +1,9 @@
-import React from "react";
-
 import Channel from "../Channel/Channel";
 
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import { useAppSelector } from "../../app/hooks";
+import { addDoc, collection } from "firebase/firestore";
+import useCollection from "../../hooks/useCollection";
 
 import MicIcon from "@mui/icons-material/Mic";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
@@ -11,17 +12,26 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
 
 import "./SideBar.scss";
-import { useAppSelector } from "../../app/hooks";
 
 function SideBar() {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user.user);
+  const { documents: channels } = useCollection("Channels");
 
+  const addChannel = async () => {
+    const channelName: string | null = prompt("Enter the channel name");
+
+    if (channelName) {
+      await addDoc(collection(db, "Channels"), {
+        channelName: channelName,
+      });
+    }
+  };
   return (
     <div className="sidebar">
       <div className="sidebar__left">
         <div className="sidebar__icon-box">
           <img
-            src="../../../public/vite.svg"
+            src="../../../public/image/discordIcon.png"
             alt="icon"
             className="sidebar__icon"
           />
@@ -47,10 +57,12 @@ function SideBar() {
               <ExpandMoreIcon />
               <h4>Programming Channels</h4>
             </div>
-            <AddIcon className="sidebar_channel-icon" />
+            <AddIcon className="sidebar_channel-icon" onClick={addChannel} />
           </div>
           <div className="sidebar__channel-list">
-            <Channel />
+            {channels.map((channel) => (
+              <Channel channel={channel} id={channel.id} key={channel.id} />
+            ))}
           </div>
           <div className="sidebar__footer">
             <div className="sidebar__footer-account">

@@ -1,5 +1,3 @@
-import React from "react";
-
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
@@ -9,10 +7,20 @@ import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 
 import "./ChatHeader.scss";
 
-function ChatHeader() {
+type Props = {
+  channelName: string | null;
+};
+
+function ChatHeader(props: Props) {
+  const { channelName } = props;
   return (
     <div className="chat-header">
-      <div className="chat-header__left"></div>
+      <div className="chat-header__left">
+        <h3>
+          <span>#</span>
+          {channelName}
+        </h3>
+      </div>
       <div className="chat-header__right">
         <CircleNotificationsIcon />
         <PushPinIcon />

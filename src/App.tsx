@@ -1,4 +1,4 @@
-import { useAppSelector, useAppDispatch } from "./app/hooks";
+import { useAppSelector } from "./app/hooks";
 import { auth } from "./firebase";
 
 import SideBar from "./components/SideBar/SideBar";
@@ -9,9 +9,11 @@ import "./App.scss";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { login, logout } from "./features/userSlice";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallBack } from "./utils/ErrorFallBack";
 
 function App() {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user.user);
   // const user = null;
   // console.log(user);
 
@@ -19,7 +21,7 @@ function App() {
 
   useEffect(() => {
     auth.onAuthStateChanged((loginUser) => {
-      console.log(loginUser);
+      // console.log(loginUser);
       if (loginUser) {
         dispatch(
           login({
@@ -39,7 +41,9 @@ function App() {
     <div className="app">
       {user ? (
         <>
-          <SideBar />
+          <ErrorBoundary FallbackComponent={ErrorFallBack}>
+            <SideBar />
+          </ErrorBoundary>
           <Chat />
         </>
       ) : (
